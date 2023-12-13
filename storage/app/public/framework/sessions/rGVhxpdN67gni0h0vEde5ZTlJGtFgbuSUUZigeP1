@@ -1,0 +1,10 @@
+a:4:{s:6:"_token";s:40:"tfYxKg3sdn2kh4NfZJLOs6kZnmdg1CQDB5ueFWEx";s:7:"message";a:3:{s:6:"status";s:7:"success";s:7:"message";s:44:"Application has been successfully installed.";s:11:"dbOutputLog";s:280:"
+   INFO  Nothing to migrate.  
+
+
+   INFO  Seeding database.  
+
+  Database\Seeders\NotificationSeeder ........................................................ RUNNING  
+  Database\Seeders\NotificationSeeder ................................................. 228.57 ms DONE  
+
+";}s:6:"_flash";a:2:{s:3:"new";a:0:{}s:3:"old";a:1:{i:0;s:7:"message";}}s:9:"_previous";a:1:{s:3:"url";s:38:"http://127.0.0.1:8000/install/database";}}
