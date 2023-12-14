@@ -65,7 +65,10 @@ class User extends Authenticatable
         }
     }
 
-
+    public function departmentHead()
+    {
+        return $this->hasOne(DepartmentHead::class, 'user_id', 'id');
+    }
 
     public function authId()
     {

@@ -14,4 +14,9 @@ class Department extends Model
     public function branch(){
         return $this->hasOne('App\Models\Branch','id','branch_id');
     }
+
+    public function departmentHead()
+    {
+        return $this->hasOne(DepartmentHead::class, 'department_id', 'id');
+    }
 }

@@ -1,7 +1,6 @@
 
 /.idea
 /.vscode
-vendor
 .env
 .htaccess
 .editorconfig

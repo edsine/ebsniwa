@@ -33,15 +33,24 @@
                         <table class="table datatable">
                             <thead>
                             <tr>
-                                <th>{{__('Branch')}}</th>
+                                <th>{{__('Department Head')}}</th>
                                 <th>{{__('Department')}}</th>
                                 <th width="200px">{{__('Action')}}</th>
                             </tr>
                             </thead>
                             <tbody class="font-style">
+                                @php
+                                $number = 1;
+                            @endphp
                             @foreach ($departments as $department)
+                           
                                 <tr>
-                                    <td>{{ !empty($department->branch)?$department->branch->name:'' }}</td>
+                                    <td>@if ($department->departmentHead)
+                                        {{ $department->departmentHead->user->name }}
+                                    @else
+                                        {{ __('N/A') }}
+                                    @endif
+                                    </td>
                                     <td>{{ $department->name }}</td>
 
                                     <td class="Action">
