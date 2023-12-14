@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Department;
+use App\Models\DepartmentHead;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -26,9 +28,10 @@ class DepartmentController extends Controller
     {
         if(\Auth::user()->can('create department'))
         {
+             $users = User::all()->pluck("name","id");
             $branch = Branch::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
 
-            return view('department.create', compact('branch'));
+            return view('department.create', compact('branch','users'));
         }
         else
         {
@@ -43,7 +46,8 @@ class DepartmentController extends Controller
 
             $validator = \Validator::make(
                 $request->all(), [
-                                   'branch_id' => 'required',
+                                   /* 'branch_id' => 'required', */
+                                   'user_id' => 'required',
                                    'name' => 'required|max:20',
                                ]
             );
@@ -59,6 +63,14 @@ class DepartmentController extends Controller
             $department->name       = $request->name;
             $department->created_by = \Auth::user()->creatorId();
             $department->save();
+
+            $department_head_id = $request->input("user_id");
+            if (!empty($department_head_id)) {
+                $departmentHead             = new DepartmentHead();
+                $departmentHead->department_id = $department->id;
+                $departmentHead->user_id = $department_head_id;
+                $departmentHead->save();
+                }
 
             return redirect()->route('department.index')->with('success', __('Department  successfully created.'));
         }
@@ -79,9 +91,11 @@ class DepartmentController extends Controller
         {
             if($department->created_by == \Auth::user()->creatorId())
             {
+                $head = DepartmentHead::where('department_id', $department->id)->first();
+            $users = User::all()->pluck("name","id");
                 $branch = Branch::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
 
-                return view('department.edit', compact('department', 'branch'));
+                return view('department.edit', compact('department', 'branch','users','head'));
             }
             else
             {
@@ -102,7 +116,8 @@ class DepartmentController extends Controller
             {
                 $validator = \Validator::make(
                     $request->all(), [
-                                       'branch_id' => 'required',
+                                       /* 'branch_id' => 'required', */
+                                       'user_id' => 'required',
                                        'name' => 'required|max:20',
                                    ]
                 );
@@ -116,6 +131,14 @@ class DepartmentController extends Controller
                 $department->branch_id = $request->branch_id;
                 $department->name      = $request->name;
                 $department->save();
+
+                $department_head_id = $request->input("user_id");
+            if (!empty($department_head_id)) {
+                $departmentHead = DepartmentHead::where('department_id', $department->id)->first();
+                $departmentHead->department_id = $department->id;
+                $departmentHead->user_id = $department_head_id;
+                $departmentHead->save();
+                }
 
                 return redirect()->route('department.index')->with('success', __('Department successfully updated.'));
             }

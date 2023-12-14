@@ -133,6 +133,7 @@ use App\Http\Controllers\CashfreeController;
 use App\Http\Controllers\AamarpayController;
 use App\Http\Controllers\PaytrController;
 use App\Http\Controllers\WarehouseTransferController;
+use App\Http\Controllers\UnitController;
 
 
 
@@ -1629,3 +1630,5 @@ Route::group(
 
 }
 );
+
+Route::resource('unit', UnitController::class)->middleware(['auth', 'XSS']);

@@ -2,12 +2,12 @@
 <div class="modal-body">
 
     <div class="row ">
-        <div class="col-12">
+        {{-- <div class="col-12">
             <div class="form-group">
                 {{Form::label('branch_id',__('Branch'))}}
                 {{Form::select('branch_id',$branch,null,array('class'=>'form-control select','placeholder'=>__('select Branch')))}}
             </div>
-        </div>
+        </div> --}}
         <div class="col-12">
             <div class="form-group">
                 {{Form::label('name',__('Name'))}}
@@ -17,6 +17,12 @@
                     <strong class="text-danger">{{ $message }}</strong>
                 </span>
                 @enderror
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                {{Form::label('user_id',__('Department Head'),['class'=>'form-label'])}}
+                {{Form::select('user_id',$users,$head->user_id ?? null,array('class'=>'form-control select','placeholder'=>__('Select Department Head')))}}
             </div>
         </div>
 
