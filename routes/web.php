@@ -164,7 +164,14 @@ require __DIR__.'/auth.php';
 //Route::get('/home', ['as' => 'home','uses' =>'HomeController@index'])->middleware(['auth','XSS']);
 
 
-Route::get('/', [DashboardController::class, 'account_dashboard_index'])->name('home')->middleware(['XSS', 'revalidate',]);
+//Route::get('/', [DashboardController::class, 'account_dashboard_index'])->name('home')->middleware(['XSS', 'revalidate',]);
+Route::get('/', function () {
+    if(!empty(auth()->user())){
+    return Redirect::to('home');
+    }else{
+    return Redirect::to('login');
+    }
+});
 
 Route::get('/home', [DashboardController::class, 'account_dashboard_index'])->name('home')->middleware(['XSS', 'revalidate',]);
 
@@ -179,7 +186,7 @@ Route::get('/login/{lang?}', [AuthenticatedSessionController::class, 'showLoginF
 // Route::get('/password/resets/{lang?}', 'Auth\AuthenticatedSessionController@showLinkRequestForm')->name('change.langPass');
 // Route::get('/password/resets/{lang?}', 'Auth\LoginController@showLinkRequestForm')->name('change.langPass');
 
-Route::get('/', [DashboardController::class, 'account_dashboard_index'])->name('dashboard')->middleware(['XSS', 'revalidate',]);
+// Route::get('/', [DashboardController::class, 'account_dashboard_index'])->name('dashboard')->middleware(['XSS', 'revalidate',]);
 
 Route::get('/account-dashboard', [DashboardController::class, 'account_dashboard_index'])->name('dashboard')->middleware(['auth','XSS', 'revalidate']);
 
@@ -1533,7 +1540,7 @@ Route::post('/project_report/tasks/{id}', [ProjectReportController::class, 'ajax
 Route::get('export/task_report/{id}', [ProjectReportController::class, 'export'])->name('project_report.export');
 
 //project copy module
-Route::get('/project/copy/{id}', [ProjectControlle::class, 'copyproject'])->name('project.copy')->middleware(['auth', 'XSS']);
+Route::get('/project/copy/{id}', [ProjectController::class, 'copyproject'])->name('project.copy')->middleware(['auth', 'XSS']);
 Route::post('/project/copy/store/{id}', [ProjectController::class, 'copyprojectstore'])->name('project.copy.store')->middleware(['auth', 'XSS']);
 
 
